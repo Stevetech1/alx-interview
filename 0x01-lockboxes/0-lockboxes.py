@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 def canUnlockAll(boxes):
     # Create a set to keep track of opened boxes.
     opened_boxes = set()
