@@ -1,22 +1,30 @@
+#!/usr/bin/python3
+
+""" Lockboxes """
+
+
 def canUnlockAll(boxes):
-    # Create a set to keep track of opened boxes.
-    opened_boxes = set()
-    # Start with the first box open.
-    opened_boxes.add(0)
-    # Create a stack to perform DFS.
-    stack = [0]
+    """
+    returns True if all boxes can be opened, or False if otherwise
+    """
+    canUnlockAll = False
+    keys = {0: True}
+    n_boxes = len(boxes)
+    while (True):
 
-    while stack:
-        current_box = stack.pop()
-        keys = boxes[current_box]
+        n_keys = len(keys)
 
-        # Check each key in the current box.
-        for key in keys:
-            if key < len(boxes) and key not in opened_boxes:
-                # If the key corresponds to a valid box and that box is not opened, open it.
-                opened_boxes.add(key)
-                stack.append(key)
+        for i in range(len(boxes)):
+            if boxes[i] and keys.get(i, False):
+                for j in boxes[i]:
+                    if j < n_boxes:
+                        keys[j] = True
+                    boxes[i] = None
 
-    # Check if all boxes have been opened.
-    return len(opened_boxes) == len(boxes)
+        if not (len(keys) > n_keys):
+            break
 
+    if n_keys == len(boxes):
+        canUnlockAll = True
+
+    return canUnlockAll
